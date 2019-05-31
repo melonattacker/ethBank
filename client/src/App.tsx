@@ -1,11 +1,11 @@
 import React from 'react';
-import Header from '../src/presentationalComponent/Header';
+import DepositForm from './components/depositForm';
 import './App.css';
 
 const App: React.FC = () => {
   return (
     <div className="App">
-      <Header/>
+      <DepositForm />
     </div>
   );
 }

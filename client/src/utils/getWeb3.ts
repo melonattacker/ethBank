@@ -1,20 +1,12 @@
-import Web3 from "web3";
+const Web3 = require("web3");
 
-const getWeb3 = () => {
-    let web3 : Web3 | undefined;
-
-    if (typeof web3 !== 'undefined') {
-        web3 = new Web3(web3.currentProvider)
-
-        console.log('Injected web3 detected.')
+export const getWeb3 = () => { 
+    
+   if (typeof window.web3 !== 'undefined') {
+        return new Web3(window.web3.currentProvider);
     } else {
-        let provider = new Web3.providers.HttpProvider('http://localhost:7545')
-
-        web3 = new Web3(provider)
-
-        console.log('No web3 instance injected, using Local web3.')
+        const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+        return web3;
     }
-    return web3
-};
+}
 
-export default getWeb3;
