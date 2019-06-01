@@ -76,8 +76,12 @@ class MaterialUIPickers extends React.Component<Props, State> {
       if(date !== null) {
         const period: number = Math.floor(date.getTime()/1000) - current_unixtime;
         if(period <= 0) {
-            alert('現在より前の時刻は無効です')
-        }
+            alert('現在より前の時刻は無効です');
+            return;
+        } else if(!value) {
+            alert('金額を入力してください');
+            return;
+        } 
         console.log(typeof value);
         const depositWei: number = web3.utils.toWei(value);
         
@@ -85,6 +89,7 @@ class MaterialUIPickers extends React.Component<Props, State> {
             from: accounts[0],
             value: depositWei
         });
+        console.log(result);
         if(result.status === true) {
             alert('送金が完了しました')
         } else {
