@@ -81,7 +81,7 @@ class MaterialUIPickers extends React.Component<Props, State> {
         } 
         const depositWei: number = web3.utils.toWei(value);
         
-        const result = await contract.methods.deposit(period).send({
+        await contract.methods.deposit(period).send({
             from: accounts[0],
             value: depositWei
         });

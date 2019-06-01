@@ -1,19 +1,19 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles/';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import ListIcon from '@material-ui/icons/List';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import {lightBlue, blueGrey} from '@material-ui/core/colors/';
+
+import '../App.css';
 
 
 const theme = createMuiTheme({
@@ -71,15 +71,11 @@ function TemporaryDrawer() {
           onClick={toggleDrawer(false)}
           onKeyDown={toggleDrawer(false)}
         >
-          <List>
-            {['Save Money', 'History'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
-          
+    
+          <div>
+            <Link to='/' style={{ textDecoration: 'none', color: 'black'}}><MenuItem><InboxIcon/>Deposit</MenuItem></Link>
+            <Link to='/history' style={{ textDecoration: 'none', color: 'black'}}><MenuItem><ListIcon/>History</MenuItem></Link>
+          </div> 
         </div>
     );
 
@@ -91,10 +87,11 @@ function TemporaryDrawer() {
                     <IconButton edge="start" className={classes.menuButton} onClick={toggleDrawer(true)} color="inherit" aria-label="Menu">
                         <MenuIcon />
                     </IconButton>
+                    <div className="title">
                     <Typography variant="h6" className={classes.title}>
-                        ETH BANK
+                    ETH BANK
                     </Typography>
-          
+                    </div>
                 </Toolbar>
             </AppBar>
             <Drawer open={state.left} onClose={toggleDrawer(false)}>

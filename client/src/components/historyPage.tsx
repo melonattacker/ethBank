@@ -98,9 +98,7 @@ class HistoryPage extends React.Component<Props, State> {
                 json = {id: i+1, amount: amount, period: period, finished: false};
             }
             this.setState({ data: this.state.data.concat(json)});
-            console.log(result);
         }
-        console.log(this.state.data)
     }
 
     unixTimeToTime = (time: number):string => {
@@ -117,10 +115,9 @@ class HistoryPage extends React.Component<Props, State> {
 
     withdraw = async(id: number) => {
         const { contract, accounts } = this.state;
-        const result: any = await contract.methods.withdraw(id).send({
+        await contract.methods.withdraw(id).send({
             from: accounts[0]
         })
-        console.log(result);
     }
 
     extendPeriod = async() => {
@@ -131,10 +128,9 @@ class HistoryPage extends React.Component<Props, State> {
                 alert('You can only extend the period.');
                 return;
             }
-            const result: any = await contract.methods.extendPeriod(period, id).send({
+            await contract.methods.extendPeriod(period, id).send({
               from: accounts[0]
             })
-            console.log(result);
         }
     }
 
@@ -154,7 +150,7 @@ class HistoryPage extends React.Component<Props, State> {
                           <TableBody>
                               {this.state.data.map((deposit:Json, i: number) => (
                                   <TableRow key={i}>
-                                    <TableCell align="left">{deposit.id}</TableCell>
+                                    <TableCell align="left">{i}</TableCell>
                                     <TableCell align="left">{deposit.amount}</TableCell>
                                     <TableCell align="left">{this.unixTimeToTime(deposit.period)}</TableCell>
                                     <TableCell align="left">{deposit.finished? <Button variant="outlined" color="primary" onClick={() => {this.withdraw(deposit.id)}}>withdraw</Button> : <Button variant="outlined" color="secondary" onClick={() => this.handleOpen(deposit.id, deposit.period)}>extend</Button>}</TableCell>
