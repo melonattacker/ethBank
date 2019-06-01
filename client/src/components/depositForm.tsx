@@ -9,7 +9,6 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import Header from './Header';
-import Progress from './Progress';
 import { getWeb3 } from '../utils/getWeb3';
 import PiggyBank from '../PiggyBank.json';
 import '../App.css';
@@ -26,8 +25,7 @@ interface State {
     web3: any,
     accounts: string[],
     contract: any,
-    value: string,
-    pending: boolean
+    value: string
 }
 
 interface InputEvent extends React.FormEvent<HTMLInputElement> {
@@ -42,8 +40,7 @@ class MaterialUIPickers extends React.Component<Props, State> {
           web3: null,
           accounts: [],
           contract: null,
-          value: '',
-          pending: false
+          value: ''
       }
       this.handleDateChange = this.handleDateChange.bind(this);
   }
@@ -76,36 +73,28 @@ class MaterialUIPickers extends React.Component<Props, State> {
       if(date !== null) {
         const period: number = Math.floor(date.getTime()/1000) - current_unixtime;
         if(period <= 0) {
-            alert('現在より前の時刻は無効です');
+            alert('Time before present is invalid.');
             return;
         } else if(!value) {
-            alert('金額を入力してください');
+            alert('Please enter the amount');
             return;
         } 
-        console.log(typeof value);
         const depositWei: number = web3.utils.toWei(value);
         
         const result = await contract.methods.deposit(period).send({
             from: accounts[0],
             value: depositWei
         });
-        console.log(result);
-        if(result.status === true) {
-            alert('送金が完了しました')
-        } else {
-            alert('エラーが発生しました')
-        }
       }
   }
 
   render() {
-    const { date, pending } = this.state;
+    const { date } = this.state;
 
     return (
         <div className="App">
         <Header/>
-        { pending? <Progress/> : <p></p> }
-        <h2>Deposit Form</h2>
+        <h2>Deposit</h2>
         <br/>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
 
