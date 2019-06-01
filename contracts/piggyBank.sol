@@ -8,6 +8,7 @@ contract PiggyBank {
     struct Deposit {
         uint256 period;
         uint256 amount;
+        bool withdrawed;
     }
     
     address[] public users;
@@ -20,7 +21,7 @@ contract PiggyBank {
         }
         userAllDeposit[msg.sender].push(1);
         uint256 newId = userTotalDeposit(msg.sender);
-        userToDeposit[msg.sender][newId] = Deposit(block.timestamp.add(_period), msg.value);
+        userToDeposit[msg.sender][newId] = Deposit(block.timestamp.add(_period), msg.value, false);
     }
     
     function extendPeriod(uint256 _secondsToExtend, uint256 _id) public {
@@ -33,6 +34,7 @@ contract PiggyBank {
         require(block.timestamp > userToDeposit[msg.sender][_id].period);
         uint256 transferValue = userToDeposit[msg.sender][_id].amount;
         userToDeposit[msg.sender][_id].amount = 0;
+        userToDeposit[msg.sender][_id].withdrawed = true;
         msg.sender.transfer(transferValue);
     }
     

@@ -82,6 +82,13 @@ class HistoryPage extends React.Component<Props, State> {
         return Time;
     }
 
+    withdraw = async(id: number) => {
+        const { contract, accounts } = this.state;
+        const result: any = await contract.methods.withdraw(id).send({
+            from: accounts[0]
+        })
+        console.log(result);
+    }
 
     renderDeposit() {
         return(
@@ -102,7 +109,7 @@ class HistoryPage extends React.Component<Props, State> {
                                     <TableCell align="left">{deposit.id}</TableCell>
                                     <TableCell align="left">{deposit.amount}</TableCell>
                                     <TableCell align="left">{deposit.period}</TableCell>
-                                    <TableCell align="left">{ deposit.finished? <Button variant="outlined" color="primary">withdraw</Button> : <Button variant="outlined" color="secondary">extend</Button>}</TableCell>
+                                    <TableCell align="left">{ deposit.finished? <Button variant="outlined" color="primary" onClick={() => {this.withdraw(deposit.id)}}>withdraw</Button> : <Button variant="outlined" color="secondary">extend</Button>}</TableCell>
                                   </TableRow>
                               ))}
                           </TableBody>
