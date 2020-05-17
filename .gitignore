@@ -1,1 +1,3 @@
-node_modules/\n*.js\npackage-lock.json
+node_modules
+package-lock.json
+.vscode
