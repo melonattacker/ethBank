@@ -53,6 +53,6 @@
     "@types/redux": "^3.6.0",
     "date-fns": "^2.0.0-alpha.21",
     "eslint-plugin-react-hooks": "^1.6.0",
-    "react-dev-utils": "^9.0.1"
+    "react-dev-utils": "^11.0.4"
   }
 }
